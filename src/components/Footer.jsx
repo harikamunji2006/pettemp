@@ -11,11 +11,12 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <Heart className="h-8 w-8 text-blue-400" />
-              <span className="text-2xl font-bold">PetConnect</span>
+              <span className="text-2xl font-bold">TailMate</span>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">
               Connecting loving families with pets in need of homes. Every pet deserves a chance at happiness.
             </p>
+            {/*
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">
                 <Facebook className="h-6 w-6" />
@@ -27,9 +28,10 @@ export default function Footer() {
                 <Instagram className="h-6 w-6" />
               </a>
               <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">
-                <Mail className="h-6 w-6" />
+                <Mail className="h-6 w-6" /> 
               </a>
             </div>
+            */}
           </div>
 
           {/* Quick Links */}
@@ -89,7 +91,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-300">
-            © 2024 PetConnect. All rights reserved. Made with ❤️ for pets and their future families.
+            © 2024 TailMate. All rights reserved. Made with ❤️ for pets and their future families.
           </p>
         </div>
       </div>

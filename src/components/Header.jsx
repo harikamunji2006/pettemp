@@ -21,7 +21,7 @@ export default function Header({ onAuthClick, isAuthenticated, favoriteCount, cu
             <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center">
               <Heart className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-gray-900">PawsConnect</span>
+            <span className="text-xl font-bold text-gray-900">TailMate</span>
           </button>
 
           {/* Desktop Navigation */}
@@ -42,7 +42,7 @@ export default function Header({ onAuthClick, isAuthenticated, favoriteCount, cu
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
             <button
-              onClick={() => onNavigate('pet-submission')}
+              onClick={() => onNavigate('rehome')}  // <- changed from 'PetSubmission' to 'rehome'
               className="text-teal-600 hover:text-teal-700 font-medium transition-colors"
             >
               Rehome a Pet
@@ -93,7 +93,7 @@ export default function Header({ onAuthClick, isAuthenticated, favoriteCount, cu
               <div className="pt-4 border-t border-gray-200">
                 <button
                   onClick={() => {
-                    onNavigate('pet-submission');
+                    onNavigate('rehome');  // <- changed from 'pet-submission' to 'rehome'
                     setIsMenuOpen(false);
                   }}
                   className="text-teal-600 hover:text-teal-700 font-medium mb-4 block"

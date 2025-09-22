@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import { Hero } from './components/Hero';
 import { BrowsePets } from './components/BrowsePets';
@@ -6,21 +6,15 @@ import { Features } from './components/Features';
 import Footer from './components/Footer';
 import About from './components/About';
 import { Contact } from './components/Contact';
-import { PetSubmission } from './components/PetSubmission';
+import { ShelterSignup } from './components/ShelterSignup';
 import { SuccessStories } from './components/SuccessStories';
 import { PetCare } from './components/PetCare';
 import { PetDetail } from './components/PetDetail';
-import AdoptionForm from './components/AdoptionForm';
+import { AdoptionForm } from './components/AdoptionForm';
 import { AuthModal } from './components/AuthModal';
 import { Dashboard } from './components/Dashboard';
 import { mockPets, mockUser } from './components/mockData';
-import { 
-  PetTemplate, 
-  UserTemplate, 
-  ShelterTemplate, 
-  ApplicationTemplate, 
-  MessageTemplate 
-} from './components/index';
+import { PetSubmission } from "./components/PetSubmission";
 
 function App() {
   const [currentView, setCurrentView] = useState('home');
@@ -31,22 +25,17 @@ function App() {
   const [user, setUser] = useState(null);
   const [favorites, setFavorites] = useState([]);
 
-  // Using all templates to avoid unused import warnings
-  const [newPet, setNewPet] = useState({ ...PetTemplate });
-  const [newUser, setNewUser] = useState({ ...UserTemplate });
-  const [newShelter, setNewShelter] = useState({ ...ShelterTemplate });
-  const [newApplication, setNewApplication] = useState({ ...ApplicationTemplate });
-  const [newMessage, setNewMessage] = useState({ ...MessageTemplate });
-
   const handleFavoriteToggle = (petId) => {
-    setFavorites((prev) =>
+    setFavorites(prev =>
       prev.includes(petId)
-        ? prev.filter((id) => id !== petId)
+        ? prev.filter(id => id !== petId)
         : [...prev, petId]
     );
   };
 
-  const handleViewPetDetails = (pet) => setSelectedPet(pet);
+  const handleViewPetDetails = (pet) => {
+    setSelectedPet(pet);
+  };
 
   const handleApplyForAdoption = (pet) => {
     if (!user) {
@@ -67,16 +56,22 @@ function App() {
   const handleAuth = (userData) => {
     setUser(userData);
     setShowAuthModal(false);
-    if (userData.type === 'adopter') setFavorites(mockUser.favorites);
+    if (userData.type === 'adopter') {
+      setFavorites(mockUser.favorites);
+    }
   };
 
   const handleAuthClick = () => {
-    if (user) setShowDashboard(true);
-    else setShowAuthModal(true);
+    if (user) {
+      setShowDashboard(true);
+    } else {
+      setShowAuthModal(true);
+    }
   };
 
-  const handleSearchClick = () => setCurrentView('browse');
-  const handleShelterClick = () => setCurrentView('pet-submission');
+  const handleSearchClick = () => {
+    setCurrentView('browse');
+  };
 
   const handleNavigate = (view) => {
     setCurrentView(view);
@@ -98,7 +93,8 @@ function App() {
 
       {currentView === 'home' && (
         <>
-          <Hero onSearchClick={handleSearchClick} onShelterClick={handleShelterClick} />
+        + <Hero onSearchClick={handleSearchClick} onShelterClick={() => handleNavigate('rehome')} />
+
           <Features />
         </>
       )}
@@ -114,11 +110,12 @@ function App() {
 
       {currentView === 'about' && <About />}
       {currentView === 'contact' && <Contact />}
-      {currentView === 'pet-submission' && <PetSubmission />}
+      {currentView === 'shelter-signup' && <ShelterSignup />}
       {currentView === 'success-stories' && <SuccessStories />}
       {currentView === 'pet-care' && <PetCare />}
+      {currentView === 'rehome' && <PetSubmission />} {/* Added this */}
 
-      {currentView !== 'pet-submission' && <Footer onNavigate={handleNavigate} />}
+      {currentView !== 'shelter-signup' && <Footer onNavigate={handleNavigate} />}
 
       {selectedPet && !showAdoptionForm && (
         <PetDetail
@@ -141,7 +138,12 @@ function App() {
         />
       )}
 
-      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} onAuth={handleAuth} />}
+      {showAuthModal && (
+        <AuthModal
+          onClose={() => setShowAuthModal(false)}
+          onAuth={handleAuth}
+        />
+      )}
 
       {showDashboard && user && (
         <Dashboard

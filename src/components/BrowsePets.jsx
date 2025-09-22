@@ -2,6 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { Search } from 'lucide-react';
 import { SearchFilters } from './SearchFilters';
 import { PetGrid } from './PetGrid';
+// <-- corrected relative imports (assuming mockData.js and pets.js live in src/, one level up)
+import { mockPets } from './mockData';
+import { petsData } from './pets';
 
 export function BrowsePets({ pets, favorites, onFavoriteToggle, onViewDetails }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -13,6 +16,9 @@ export function BrowsePets({ pets, favorites, onFavoriteToggle, onViewDetails })
     location: ''
   });
 
+  // fallback: use passed `pets` if available, otherwise try mockPets or petsData
+  const petList = (pets && pets.length) ? pets : (mockPets && mockPets.length ? mockPets : (petsData || []));
+
   const handleFilterChange = (key, value) => setFilters(prev => ({ ...prev, [key]: value }));
   const clearFilters = () => {
     setFilters({ species: '', breed: '', age: '', size: '', location: '' });
@@ -20,8 +26,8 @@ export function BrowsePets({ pets, favorites, onFavoriteToggle, onViewDetails })
   };
 
   const filteredPets = useMemo(() => {
-    return pets.filter(pet => {
-      if (searchQuery && ![pet.name, pet.breed, pet.description].some(val => val.toLowerCase().includes(searchQuery.toLowerCase()))) return false;
+    return petList.filter(pet => {
+      if (searchQuery && ![pet.name, pet.breed, pet.description].some(val => (val || '').toLowerCase().includes(searchQuery.toLowerCase()))) return false;
       if (filters.species && pet.species !== filters.species) return false;
       if (filters.size && pet.size !== filters.size) return false;
       if (filters.age) {
@@ -32,7 +38,7 @@ export function BrowsePets({ pets, favorites, onFavoriteToggle, onViewDetails })
       if (filters.location && !pet.location.toLowerCase().includes(filters.location.toLowerCase())) return false;
       return true;
     });
-  }, [pets, searchQuery, filters]);
+  }, [petList, searchQuery, filters]);
 
   return (
     <section className="py-12 bg-gray-50 min-h-screen">
@@ -58,7 +64,7 @@ export function BrowsePets({ pets, favorites, onFavoriteToggle, onViewDetails })
         <SearchFilters filters={filters} onFilterChange={handleFilterChange} onClearFilters={clearFilters} />
 
         <div className="mb-6 text-gray-600">
-          Showing <span className="font-semibold">{filteredPets.length}</span> of <span className="font-semibold">{pets.length}</span> pets
+          Showing <span className="font-semibold">{filteredPets.length}</span> of <span className="font-semibold">{petList.length}</span> pets
         </div>
 
         <PetGrid pets={filteredPets} favorites={favorites} onFavoriteToggle={onFavoriteToggle} onViewDetails={onViewDetails} />

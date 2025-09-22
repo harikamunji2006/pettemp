@@ -63,7 +63,7 @@ export default function About() {
             Our Mission is <span className="text-teal-600 block">Saving Lives</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Founded in 2020, PawsConnect has revolutionized pet adoption by connecting loving families with pets.
+            Founded in 2020, TailMate has revolutionized pet adoption by connecting loving families with pets.
           </p>
 
           {/* Stats */}
